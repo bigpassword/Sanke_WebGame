@@ -4,6 +4,7 @@
 		<title>Sanke the Game</title>
 		<link rel="stylesheet" type="text/css" href="style.css">
 		<meta name="author" content="Kacper Woźniak">
+		<meta name="viewport" content="width=device-width, initial-scale:1.0">
 		
 		<script src="script.js">
 		</script>
@@ -11,16 +12,20 @@
 	<body>
 
 		<div id="console" class="window" onkeydown="consoleInput(event);">
-			<div class="winbar">Console</div>
+			<div class="winbar">Command Prompt</div>
 
 			<div id="consoleContent">
-				sample text
+				Error loading console
 			</div>
-			
-			<script>
-				setup();
-			</script>
 		</div>
 
+		<div id="taskbar">
+			<div id="startMenu" class="taskItem">Start</div>
+
+			<div id="clock" class="taskItem">HH:MM</div>
+		</div>
 	</body>
+	<script>
+		setup();
+	</script>
 </html>

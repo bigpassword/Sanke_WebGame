@@ -12,8 +12,16 @@
     font-smooth: never;
 }
 
+* {
+	font-family: 'fixedsys', sans-serif;
+}
+
+body {
+	background-color: teal;
+}
+
 .window {
-	border: 8px ridge rgb(196, 196, 196);
+	border: 6px ridge rgb(196, 196, 196);
 	background-color: black;
 	color: white;
 	width: 720px;
@@ -25,7 +33,7 @@
 
 .winbar {
 	background-color: blue;
-	border-bottom: 8px ridge rgb(196, 196, 196);
+	border-bottom: 6px ridge rgb(196, 196, 196);
 	color: white;
 	height: 16px;
 	padding: 2px;
@@ -44,6 +52,34 @@
 	overflow-y: auto;
 }
 
-#console {
-	font-family: 'fixedsys', sans-serif;
+#taskbar {
+	background-color: lightgrey;
+	height: 40px;
+	width: 100%;
+	border: 4px outset rgb(196, 196, 196);
+	padding: 2px;
+
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-content: center;
+
+	box-sizing: border-box;
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+}
+
+.taskItem {
+	box-sizing: border-box;
+}
+
+#startMenu {
+	font-weight: bold;
+	border: 2px outset rgb(196, 196, 196);
+	border-radius: 2px;
+}
+
+#startMenu:hover {
+	border-style: inset;
 }
