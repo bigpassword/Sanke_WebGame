@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'fixedsys';
-    src: url('fonts/../../fonts/fsex300-webfont.eot');
-    src: url('../fonts/fsex300-webfont.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/fsex300-webfont.woff') format('woff'),
-    url('../fonts/fsex300-webfont.ttf') format('truetype'),
-    url('../fonts/fsex300-webfont.svg#fixedsys') format('svg');
+    src: url('fonts/fsex300-webfont.eot');
+    src: url('fonts/fsex300-webfont.eot?#iefix') format('embedded-opentype'),
+    url('fonts/fsex300-webfont.woff') format('woff'),
+    url('fonts/fsex300-webfont.ttf') format('truetype'),
+    url('fonts/fsex300-webfont.svg#fixedsys') format('svg');
     font-weight: normal;
     font-style: normal;
     -webkit-font-smoothing: none;
@@ -16,8 +16,8 @@
 	border: 8px ridge rgb(196, 196, 196);
 	background-color: black;
 	color: white;
-	width: 640px;
-	height: 360px;
+	width: 720px;
+	height: 480px;
 
 	display: flex;
 	flex-direction: column;
@@ -35,10 +35,13 @@
 	justify-content: space-between;
 }
 
-#content {
+#consoleContent {
 	background-color: black;
 	height: 100%;
 	padding: 0px 2px;
+
+	word-wrap: break-word;
+	overflow-y: scroll;
 }
 
 #console {

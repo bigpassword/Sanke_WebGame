@@ -10,17 +10,15 @@
 	</head>
 	<body>
 
-		<div id="console" class = "window">
+		<div id="console" class="window" onkeydown="consoleInput(event);">
 			<div class="winbar">Console</div>
 
-			<div id="content">
+			<div id="consoleContent">
 				sample text
 			</div>
 			
 			<script>
 				setup();
-
-				printBoard();
 			</script>
 		</div>
 
