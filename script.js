@@ -155,7 +155,7 @@ function keyInput(event) {
 
 /* command execution */
 function executeCommand(command) {
-	consoleContent.innerHTML += "<br>"
+	consoleContent.innerHTML += "<br>";
 	switch (command) {
 		case commands.startGame:
 			gameOn = true;
@@ -166,12 +166,12 @@ function executeCommand(command) {
 			return;
 		
 		default:
-			consoleContent.innerHTML += "Invalid command"
+			consoleContent.innerHTML += "Invalid command";
 			break;
 	}
-	consoleContent.innerHTML += "<br>"
+	consoleContent.innerHTML += "<br>";
 	currentLine = "";
-	consoleContent.innerHTML += "Wimdons Console /root> "
+	consoleContent.innerHTML += "Wimdons Console /root> ";
 }
 
 /* game logic */
