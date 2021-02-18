@@ -257,7 +257,7 @@ function executeCommand(command) {
 						break;
 				
 					case commands.clear:
-						consoleContent.innerHTML += `Clears text <br> ${commands.clear} noArg`;
+						consoleContent.innerHTML += `Clears text <br> ${commands.clear} {noArg}`;
 						break;
 
 					case commands.help:
@@ -268,9 +268,9 @@ function executeCommand(command) {
 						consoleContent.innerHTML += `Invalid command: ${command[1]}`;
 						break;
 				}
+			} else {
+				consoleContent.innerHTML += helpMsg;
 			}
-
-			consoleContent.innerHTML += helpMsg;
 			break;
 
 		default:
