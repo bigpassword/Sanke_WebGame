@@ -112,7 +112,6 @@ function setup() {
 function printBoard() {
 	consoleContent.innerHTML = "Time: " + new Date(new Date().getTime() - startTime).getSeconds() + "<br>";
 	consoleContent.innerHTML += "Score: " + snakeLen + "<br>";
-	consoleContent.innerHTML += "Apple Spawn: " + spawnApple + "<br>";
 
 	/* actual board*/
 	board.forEach(i => {
