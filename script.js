@@ -11,9 +11,10 @@ var spawnApple = true;
 var mapWrap = true;
 var snakeLen = 2;
 var curPos;
+var startTime;
 
 /* console commands */
-var commands = {startGame: "python3 snake.py", clear: "clear"};
+var commands = {snake: "snake.py", clear: "clear"};
 
 /*
 
@@ -51,6 +52,9 @@ var consoleContent;
 var lastInput = "right";
 var lastCode;
 
+/* disable backspace */
+window.onkeydown = function (event) { if (event.which == 8) { event.preventDefault(); }; };
+
 /* generate board */
 var preBoard = [];
 var board;
@@ -79,23 +83,19 @@ function initLine() {
 
 /*setup things that require the html part to be loaded */
 function setup() {
-	alert("setup starting");
-
 	document.addEventListener("keydown", keyInput, false);
 	consoleContent = document.getElementById("consoleContent");
 
 	if (!gameOn) {
 		initLine();
 	}
-
-	alert("setup finished successfully");
 }
 
 /* print board function */
 function printBoard() {
-	consoleContent.innerHTML = new Date().toTimeString() + "<br>";
-	consoleContent.innerHTML += new Date().getSeconds() + "<br>";
+	consoleContent.innerHTML = "Time: " + new Date(new Date().getTime() - startTime).getSeconds() + "<br>";
 
+	/* actual board*/
 	board.forEach(i => {
 		consoleContent.innerHTML += i + "<br>";
 	});
@@ -146,6 +146,11 @@ function keyInput(event) {
 	if (!gameOn) {
 		if (event.keyCode == 13) {
 			executeCommand(currentLine);
+		} else if (event.keyCode == 8) {
+			if (currentLine.length > 0) {
+				currentLine = currentLine.slice(0, -1);
+				consoleContent.innerHTML = consoleContent.innerHTML.slice(0, -1);
+			}
 		} else {
 			currentLine += event.key;
 			consoleContent.innerHTML += event.key;
@@ -157,8 +162,9 @@ function keyInput(event) {
 function executeCommand(command) {
 	consoleContent.innerHTML += "<br>";
 	switch (command) {
-		case commands.startGame:
+		case commands.snake:
 			gameOn = true;
+			startTime = new Date().getTime();
 			break;
 	
 		case commands.clear:
