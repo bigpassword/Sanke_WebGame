@@ -1,7 +1,8 @@
 ﻿/* defaults */
-var boardSize = 23;
+var boardSize = 13;
 var boardFill = parseInt(0);
 var gameSpeed = 200;
+var loadTime = 2000;
 
 var currentLine = "";
 
@@ -9,12 +10,14 @@ var currentLine = "";
 var gameOn = false;
 var spawnApple = true;
 var mapWrap = true;
+var minSize = 3;
 var snakeLen = 2;
 var curPos;
 var startTime;
 
 /* console commands */
-var commands = {snake: "snake.py", clear: "clear"};
+var commands = {snake: "snake", clear: "clear", help: "help"};
+var helpMsg = "Available commands: " + Object.values(commands);
 
 /*
 
@@ -56,29 +59,43 @@ var lastCode;
 window.onkeydown = function (event) { if (event.which == 8) { event.preventDefault(); }; };
 
 /* generate board */
-var preBoard = [];
+var preBoard;
 var board;
 
+function genBoard() {
+	preBoard = [];
 
-for (let i = 0; i < boardSize; i++) {
-	var tempArray = [];
-	for (let e = 0; e < boardSize; e++) {
-		tempArray.push(boardFill);
+	for (let i = 0; i < boardSize; i++) {
+		let tempArray = [];
+		for (let e = 0; e < boardSize; e++) {
+			tempArray.push(boardFill);
+		}
+		preBoard.push(tempArray);
 	}
-	preBoard.push(tempArray);
+	
+	/* spawn player*/
+	var mid = Math.floor(boardSize/2);
+	preBoard[mid][mid] = snakeLen;
+	curPos = {x: mid, y: mid};
+	
+	/* load board */
+	board = preBoard;
 }
 
-/* spawn player*/
-var mid = Math.floor(boardSize/2);
-preBoard[mid][mid] = snakeLen;
-curPos = {x: mid, y: mid};
-
-/* load board */
-board = preBoard;
+genBoard();
 
 function initLine() {
 	currentLine = "";
-	consoleContent.innerHTML = "Macrohard Doors v1.1<br>(c) 2020 Person Inc. Some rights reserved.<br><br>Wimdons Console /root> "
+	consoleContent.innerHTML = "Macrohard Doors v1.1<br>(c) 2020 Person Inc. Some rights reserved.<br><br>Wimdons Console /root> ";
+}
+
+function resetGameVars() {
+	lastInput = "right";
+	boardSize = 13;
+	gameSpeed = 200;
+	spawnApple = true;
+	mapWrap = true;
+	snakeLen = 2;
 }
 
 /*setup things that require the html part to be loaded */
@@ -94,6 +111,8 @@ function setup() {
 /* print board function */
 function printBoard() {
 	consoleContent.innerHTML = "Time: " + new Date(new Date().getTime() - startTime).getSeconds() + "<br>";
+	consoleContent.innerHTML += "Score: " + snakeLen + "<br>";
+	consoleContent.innerHTML += "Apple Spawn: " + spawnApple + "<br>";
 
 	/* actual board*/
 	board.forEach(i => {
@@ -132,20 +151,19 @@ function keyInput(event) {
 
 		case controls.console:
 			if (gameOn) {
-				gameOn = false;
-				initLine();
-				return;
+				exitGame();
 			}
-			break;
+			return;
 
 		default:
-			lastCode = event.keyCode;
 			break;
 	}
 
+	lastCode = event.keyCode;
+
 	if (!gameOn) {
 		if (event.keyCode == 13) {
-			executeCommand(currentLine);
+			executeCommand(currentLine.split(" "));
 		} else if (event.keyCode == 8) {
 			if (currentLine.length > 0) {
 				currentLine = currentLine.slice(0, -1);
@@ -161,21 +179,83 @@ function keyInput(event) {
 /* command execution */
 function executeCommand(command) {
 	consoleContent.innerHTML += "<br>";
-	switch (command) {
+	switch (command[0]) {
 		case commands.snake:
-			gameOn = true;
+			resetGameVars();
+			if (!isNaN(parseInt(command[1]))) {
+				if (command[1] == 1) {
+					loadTime = 2000;
+				} else if (command[1] == 0) {
+					loadTime = 0;
+				} else {
+					consoleContent.innerHTML += "Invalid argument[0]";
+					break;
+				}
+			}
+
+			if (!isNaN(parseInt(command[2]))) {
+				if (command[2] >= minSize) {
+					boardSize = command[2];
+				} else {
+					consoleContent.innerHTML += "Board too small";
+					break;
+				}
+			} else if (command[2] != null) {
+				consoleContent.innerHTML += "Invalid argument[1]";
+				break;
+			}
+
+			if (!isNaN(parseInt(command[3]))) {
+				gameSpeed = command[3];
+			} else if (command[3] != null) {
+				consoleContent.innerHTML += "Invalid argument[2]";
+				break;
+			}
+
+			/* start game */
+			setTimeout(() => {
+				genBoard();
+				gameInterval = setInterval(advanceGame, gameSpeed);
+				gameOn = true;
+			}, loadTime);
+
+			consoleContent.innerHTML = "Controls: <br>movement: [w/s/a/d/arrows] <br>change controls: [ '\\' ] <br> exit game: [ ']' ] <br><br>Starting snek...";
 			startTime = new Date().getTime();
-			break;
+			return;
 	
 		case commands.clear:
 			initLine();
 			return;
 		
+		case commands.help:
+			if (command[1] != null) {
+				switch (command[1]) {
+					case commands.snake:
+						consoleContent.innerHTML += `Starts snake inside this windows <br> ${commands.snake} [enableDelay:bool] [boardSize:int] [gameSpeed:int]`;
+						break;
+				
+					case commands.clear:
+						consoleContent.innerHTML += `Clears text <br> ${commands.clear} noArg`;
+						break;
+
+					case commands.help:
+						consoleContent.innerHTML += `Lists available commands <br> ${commands.help} [command:string]`;
+						break;
+
+					default:
+						consoleContent.innerHTML += `Invalid command: ${command[1]}`;
+						break;
+				}
+			}
+
+			consoleContent.innerHTML += helpMsg;
+			break;
+
 		default:
 			consoleContent.innerHTML += "Invalid command";
 			break;
 	}
-	consoleContent.innerHTML += "<br>";
+	consoleContent.innerHTML += "<br><br>";
 	currentLine = "";
 	consoleContent.innerHTML += "Wimdons Console /root> ";
 }
@@ -199,17 +279,13 @@ function advanceGame() {
 
 	}
 	
-	/* lower board */
-	lowerBoard();
-	
 	/* move snake */
 	move();
 
-	/* position conditions */
-	checkPos();
-
 	/* do visual stuff */
-	printBoard();
+	if (gameOn) {
+		printBoard();
+	}
 }
 
 /* game functions */
@@ -220,12 +296,14 @@ function move() {
 			if (curPos.x > boardSize-1) {
 				if (mapWrap) {
 					curPos.x = 0;
+					checkPos();
 					board[curPos.y][curPos.x] = snakeLen;
 				} else {
 					loose();
 				}
 				
 			} else {
+				checkPos();
 				board[curPos.y][curPos.x] = snakeLen;
 			}
 			break;
@@ -235,11 +313,13 @@ function move() {
 			if (curPos.x < 0) {
 				if (mapWrap) {
 					curPos.x = boardSize-1;
+					checkPos();
 					board[curPos.y][curPos.x] = snakeLen;
 				} else {
 					loose();
 				}
 			} else {
+				checkPos();
 				board[curPos.y][curPos.x] = snakeLen;
 			}
 			break;
@@ -249,11 +329,13 @@ function move() {
 			if (curPos.y < 0) {
 				if (mapWrap) {
 					curPos.y = boardSize-1;
+					checkPos();
 					board[curPos.y][curPos.x] = snakeLen;
 				} else {
 					loose();
 				}
 			} else {
+				checkPos();
 				board[curPos.y][curPos.x] = snakeLen;
 			}
 			break;
@@ -263,11 +345,13 @@ function move() {
 			if (curPos.y > boardSize-1) {
 				if (mapWrap) {
 					curPos.y = 0;
+					checkPos();
 					board[curPos.y][curPos.x] = snakeLen;
 				} else {
 					loose();
 				}
 			} else {
+				checkPos();
 				board[curPos.y][curPos.x] = snakeLen;
 			}
 			break;
@@ -278,9 +362,13 @@ function move() {
 }
 
 function checkPos() {
-	if (board[curPos.y][curPos.x]) {
-
+	if (board[curPos.y][curPos.x] < 0) {
+		snakeLen -= board[curPos.y][curPos.x];
+		spawnApple = true;
+	} else if (board[curPos.y][curPos.x] > 0) {
+		loose();
 	}
+	lowerBoard();
 }
 
 function lowerBoard() {
@@ -294,14 +382,21 @@ function lowerBoard() {
 	}
 }
 
+function exitGame() {
+	clearInterval(gameInterval);
+	gameOn = false;
+	consoleContent.innerHTML += "<br><br>";
+	currentLine = "";
+	consoleContent.innerHTML += "Wimdons Console /root> ";
+	return;
+}
+
 function loose() {
-	alert("lost");
+	consoleContent.innerHTML += "<br>You lost!"
+	exitGame();
 }
 
 /* custom function for testing && || fun */
 function custom() {
 	consoleContent.style.color = `hsl(${Math.floor(Math.random()*360)}, 100%, 45%)`;
 }
-
-/* setup timed events */
-setInterval(advanceGame, gameSpeed);
