@@ -4,6 +4,11 @@ var boardFill = parseInt(0);
 var gameSpeed = 200;
 var loadTime = 2000;
 
+var pHead = "0";
+var pBody = "o";
+var pApple = "@";
+var pBackground = "-";
+
 var currentLine = "";
 
 /* game vars */
@@ -114,8 +119,26 @@ function printBoard() {
 	consoleContent.innerHTML += "Score: " + snakeLen + "<br>";
 
 	/* actual board*/
+	/* debug printout
 	board.forEach(i => {
 		consoleContent.innerHTML += i + "<br>";
+	});
+	*/
+	board.forEach(i => {
+		i.forEach(e => {
+			let pval = " ";
+			if (e == snakeLen) {
+				pval = pHead;
+			} else if (e < 0) {
+				pval = pApple;
+			} else if (e > 0) {
+				pval = pBody
+			} else {
+				pval = pBackground;
+			}
+			consoleContent.innerHTML += ` ${pval} `;
+		});
+		consoleContent.innerHTML += "<br>"
 	});
 }
 
