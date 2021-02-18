@@ -91,7 +91,7 @@ genBoard();
 
 function initLine() {
 	currentLine = "";
-	consoleContent.innerHTML = "Macrohard Doors v1.1<br>(c) 2020 Person Inc. Some rights reserved.<br><br>Wimdons Console /root> ";
+	consoleContent.innerHTML = "Macrohard Doors v1.1 (0.1.02)<br>(c) 2020 Person Inc. Some rights reserved.<br><br>Wimdons Console /root> ";
 }
 
 function resetGameVars() {
