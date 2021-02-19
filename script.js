@@ -154,19 +154,27 @@ function printBoard() {
 function keyInput(event) {
 	switch (event.keyCode) {
 		case controls.left:
-			lastInput = "left";
+			if (lastInput != "right") {
+				lastInput = "left";
+			}
 			break;
 
 		case controls.up:
-			lastInput = "up";
+			if (lastInput != "down") {
+				lastInput = "up";
+			}
 			break;
 
 		case controls.right:
-			lastInput = "right";
+			if (lastInput != "left") {
+				lastInput = "right";
+			}
 			break;
 
 		case controls.down:
-			lastInput = "down";
+			if (lastInput != "up") {
+				lastInput = "down";
+			}
 			break;
 
 		case controls.swap:
