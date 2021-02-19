@@ -104,6 +104,7 @@ body {
 #startText {
 	font-size: large;
 	margin: 2px;
+	user-select: none;
 }
 
 .taskItem {
