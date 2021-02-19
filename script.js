@@ -1,9 +1,10 @@
 ﻿/* defaults */
-var cycleTime = 200; /* change to 1 and make game speed independent */
+var cycleTime = 1; /* change to 1 and make game speed independent */
 
 var boardSize = 13;
 var boardFill = parseInt(0);
-var gameSpeed = 200;
+var gameSpeed = 100;
+var gameDeltaTime = 0;
 var loadTime = 2000;
 
 var pHead = "0";
@@ -99,7 +100,7 @@ function initLine() {
 function resetGameVars() {
 	lastInput = "right";
 	boardSize = 13;
-	gameSpeed = 200;
+	gameSpeed = 100;
 	spawnApple = true;
 	mapWrap = true;
 	snakeLen = 2;
@@ -233,16 +234,21 @@ function executeCommand(command) {
 				break;
 			}
 
-			/* start game *//*
+			if (!isNaN(parseInt(command[3]))) {
+				gameSpeed = command[3];
+			} else if (command[3] != null) {
+				consoleContent.innerHTML += "Invalid argument[2]";
+				break;
+			}
+
+			/* start game */
 			setTimeout(() => {
 				genBoard();
 				gameOn = true;
 			}, loadTime);
-			*/
-			genBoard();
-			gameOn = true;
-
-			consoleContent.innerHTML = "Controls: <br>movement: [w/s/a/d/arrows] <br>change controls: [ '\\' ] <br> exit game: [ ']' ] <br><br>Starting snek...";
+			if (loadTime > 0) {
+				consoleContent.innerHTML = "Controls: <br>movement: [w/s/a/d/arrows] <br>change controls: [ '\\' ] <br> exit game: [ ']' ] <br><br>Starting snek...";
+			}
 			startTime = new Date().getTime();
 			return;
 	
@@ -254,7 +260,7 @@ function executeCommand(command) {
 			if (command[1] != null) {
 				switch (command[1]) {
 					case commands.snake:
-						consoleContent.innerHTML += `Starts snake inside this windows <br> ${commands.snake} [enableDelay:bool] [boardSize:int]`;
+						consoleContent.innerHTML += `Starts snake inside this windows <br> ${commands.snake} [enableDelay:bool] [boardSize:int] [gameSpeed:int]`;
 						break;
 				
 					case commands.clear:
@@ -285,26 +291,36 @@ function executeCommand(command) {
 
 /* logic repeated in the interval */
 function cycle() {
+	/* debug */
+	document.getElementById("console").getElementsByClassName("winbar")[0].innerHTML = "Delta time: " + gameDeltaTime;
+
+
 	/* check if game is on */
 	if (gameOn) {
-		/* spawn apple */
-		while (spawnApple) {
-			let x = Math.round(Math.random()*boardSize);
-			let y = Math.round(Math.random()*boardSize);
+		/* progress time */
+		gameDeltaTime += cycleTime;
+		if (gameDeltaTime >= gameSpeed) {
+			/* spawn apple */
+			while (spawnApple) {
+				let x = Math.round(Math.random()*boardSize);
+				let y = Math.round(Math.random()*boardSize);
 
-			if (board[x][y] == 0) {
-				board[x][y] = -1;
-				spawnApple = false;
+				if (board[x][y] == 0) {
+					board[x][y] = -1;
+					spawnApple = false;
+				}
+
 			}
 
-		}
+			/* move snake */
+			move();
 
-		/* move snake */
-		move();
+			/* do visual stuff */
+			if (gameOn) {
+				printBoard();
+			}
 
-		/* do visual stuff */
-		if (gameOn) {
-			printBoard();
+			gameDeltaTime = 0;
 		}
 	}
 
