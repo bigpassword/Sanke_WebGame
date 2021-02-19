@@ -291,10 +291,6 @@ function executeCommand(command) {
 
 /* logic repeated in the interval */
 function cycle() {
-	/* debug */
-	document.getElementById("console").getElementsByClassName("winbar")[0].innerHTML = "Delta time: " + gameDeltaTime;
-
-
 	/* check if game is on */
 	if (gameOn) {
 		/* progress time */
