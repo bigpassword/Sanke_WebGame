@@ -9,8 +9,6 @@ var gameDeltaTime = 0;
 var loadTime = 2000;
 var defInput = "right";
 
-
-
 var pHead = "0";
 var pBody = "o";
 var pApple = "@";
@@ -148,7 +146,7 @@ function printBoard() {
 			}
 			consoleContent.innerHTML += ` ${pval} `;
 		});
-		consoleContent.innerHTML += "<br>"
+		consoleContent.innerHTML += "<br>";
 	});
 }
 
@@ -185,9 +183,8 @@ function keyInput(event) {
 			if (gameOn) {
 				exitGame();
 				return;
-			} else {
-				break;
 			}
+			break;
 
 		default:
 			break;
