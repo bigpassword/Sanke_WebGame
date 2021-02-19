@@ -21,6 +21,8 @@ var pBackground = "-";
 
 var currentLine = "";
 
+var rainbowText = false;
+
 /* game vars */
 var defApple = true;
 var defMapWrap = true;
@@ -32,7 +34,7 @@ var curPos;
 var startTime;
 
 /* console commands */
-var commands = {snake: "snake", clear: "clear", help: "help"};
+var commands = {snake: "snake", clear: "clear", help: "help", epilepsy: "epilepsy"};
 var helpMsg = "Available commands: " + Object.values(commands);
 
 /*
@@ -273,6 +275,13 @@ function executeCommand(command) {
 			initLine();
 			return;
 		
+		case commands.epilepsy:
+			rainbowText = !rainbowText;
+			if (!rainbowText) {
+				consoleContent.style.color = "white";
+			}
+			break;
+
 		case commands.help:
 			if (command[1] != null) {
 				switch (command[1]) {
@@ -284,6 +293,10 @@ function executeCommand(command) {
 						consoleContent.innerHTML += `Clears text <br> ${commands.clear} {noArg}`;
 						break;
 
+					case commands.epilepsy:
+						consoleContent.innerHTML += `Toggles rainbow text (warning, may trigger epilepsy) <br> ${commands.epilepsy} {noArg}`;
+						break;
+	
 					case commands.help:
 						consoleContent.innerHTML += `Lists available commands <br> ${commands.help} [command:string]`;
 						break;
@@ -348,6 +361,10 @@ function cycle() {
 
 			gameDeltaTime = 0;
 		}
+	}
+
+	if (rainbowText) {
+		custom();
 	}
 
 	updateNetwork();
