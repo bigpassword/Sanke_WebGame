@@ -1,5 +1,10 @@
 ﻿/* defaults */
-var cycleTime = 1; /* change to 1 and make game speed independent */
+var cycleTime = 1;
+var networkIcons = ["none", "up", "down", "both"];
+var network;
+var networkPeriod = 100;
+var networkDeltaTime = 0;
+var consoleContent;
 
 var defBoardSize = 13;
 var defGameSpeed = 50;
@@ -62,7 +67,6 @@ function addContorls() {
 
 addContorls();
 
-var consoleContent;
 var lastInput = "right";
 var lastCode;
 
@@ -113,6 +117,7 @@ function resetGameVars() {
 function setup() {
 	document.addEventListener("keydown", keyInput, false);
 	consoleContent = document.getElementById("consoleContent");
+	network = document.getElementById("network");
 
 	setInterval(cycle, cycleTime);
 
@@ -197,6 +202,8 @@ function keyInput(event) {
 		default:
 			break;
 	}
+	
+	network.src = "graphics/network_down.png";
 
 	lastCode = event.keyCode;
 
@@ -343,6 +350,7 @@ function cycle() {
 		}
 	}
 
+	updateNetwork();
 	updateTime();
 }
 
@@ -466,4 +474,42 @@ function custom() {
 function updateTime() {
 	let date = new Date();
 	document.getElementById("clock").innerHTML = date.getHours() + ":" + ("0" + date.getMinutes()).slice(-2);
+}
+
+function updateNetwork() {
+	let up = Math.round(Math.random());
+	let down = Math.round(Math.random());
+	let status;
+
+	if (gameOn) {
+		up = 1;
+	}
+
+	if (networkDeltaTime > networkPeriod) {
+		status = `${down}${up}`;
+		networkDeltaTime = 0;
+	}
+
+	switch (status) {
+		case "00":
+			network.src = "graphics/network_none.png";
+			break;
+			
+		case "01":
+			network.src = "graphics/network_up.png";
+			break;
+			
+		case "10":
+			network.src = "graphics/network_down.png";
+			break;
+			
+		case "11":
+			network.src = "graphics/network_both.png";
+			break;
+	
+		default:
+			break;
+	}
+
+	networkDeltaTime += cycleTime;
 }

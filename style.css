@@ -33,6 +33,7 @@ body {
 
 .winbar {
 	background-color: blue;
+	background-image: linear-gradient(to right, blue, steelblue);
 	border-bottom: 6px ridge rgb(196, 196, 196);
 	color: white;
 	height: 16px;
@@ -77,6 +78,7 @@ body {
 
 	display: flex;
 	flex-direction: row-reverse;
+	justify-content: space-between;
 }
 
 #startMenu {
@@ -93,7 +95,7 @@ body {
 }
 
 #logo {
-	width: 22px;
+	width: 20px;
 	height: 20px;
 	margin: 2px;
 	margin-right: 4px;
@@ -104,6 +106,18 @@ body {
 	margin: 2px;
 }
 
+.taskItem {
+	margin: 1px;
+}
+
 #clock {
 	font-weight: lighter;
+
+	display: flex;
+	flex-direction: row;
+}
+
+#network {
+	width: 20px;
+	height: 20px;
 }
