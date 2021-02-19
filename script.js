@@ -5,6 +5,9 @@ var network;
 var networkPeriod = 100;
 var networkDeltaTime = 0;
 var consoleContent;
+var consoleWindow;
+var consoleTab;
+var windowActive = true;
 
 var defBoardSize = 13;
 var defGameSpeed = 50;
@@ -29,7 +32,9 @@ var defMapWrap = true;
 var defSnakeLen = 3;
 
 var gameOn = false;
+var boardSize = 13;
 var minSize = 3;
+var snakeLen = 3;
 var curPos;
 var startTime;
 
@@ -119,6 +124,8 @@ function resetGameVars() {
 function setup() {
 	document.addEventListener("keydown", keyInput, false);
 	consoleContent = document.getElementById("consoleContent");
+	consoleWindow = document.getElementById("console");
+	consoleTab = document.getElementById("commandPromptTab");
 	network = document.getElementById("network");
 
 	setInterval(cycle, cycleTime);
@@ -159,6 +166,9 @@ function printBoard() {
 
 /* handle input */
 function keyInput(event) {
+	if (!windowActive) {
+		return;
+	}
 	switch (event.keyCode) {
 		case controls.left:
 			if (lastInput != "right") {
@@ -485,7 +495,19 @@ function winGame() {
 
 /* custom function for testing && || fun */
 function custom() {
-	consoleContent.style.color = `hsl(${Math.floor(Math.random()*360)}, 100%, 45%)`;
+	consoleContent.style.color = `hsl(${Math.floor(Math.random()*360)}, 100%, 50%)`;
+}
+
+function hideConsole() {
+	windowActive = !windowActive;
+	if (windowActive) {
+		consoleWindow.style.display = "block";
+		consoleTab.style.borderStyle = "inset";
+	} else {
+		consoleWindow.style.display = "none";
+		consoleTab.style.borderStyle = "outset";
+	}
+	
 }
 
 function updateTime() {

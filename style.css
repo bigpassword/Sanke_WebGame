@@ -59,10 +59,11 @@ body {
 	width: 100%;
 	border: 4px outset rgb(196, 196, 196);
 	padding: 2px;
+	user-select: none;
 
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+	justify-content: unset;
 	align-content: center;
 
 	box-sizing: border-box;
@@ -79,6 +80,25 @@ body {
 	display: flex;
 	flex-direction: row-reverse;
 	justify-content: space-between;
+}
+
+#tabs {
+	flex-grow: 1;
+
+	display: flex;
+}
+
+#commandPromptTab {
+	width: 196px;
+	height: 24px;
+	border: 2px inset rgb(196, 196, 196);
+	border-radius: 2px;
+	padding-left: 2px;
+	margin: auto 4px;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
 
 #startMenu {
@@ -104,7 +124,6 @@ body {
 #startText {
 	font-size: large;
 	margin: 2px;
-	user-select: none;
 }
 
 .taskItem {
@@ -121,4 +140,37 @@ body {
 #network {
 	width: 20px;
 	height: 20px;
+}
+
+#bsod {
+	font-weight: lighter;
+	background-color: blue;
+	color: white;
+
+	display: none;
+}
+
+@media screen and (max-width: 746px) {
+	.window {
+		display: none;
+	}
+
+	#commandPromptTab {
+		border-style: outset;
+	}
+}
+
+/* 372px absolute minimum */
+@media screen and (max-width: 420px) {
+	html {
+		background-color: blue;
+	}
+
+	#bsod {
+		display: block;
+	}
+
+	#screen {
+		display: none;
+	}
 }

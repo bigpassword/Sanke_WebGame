@@ -10,24 +10,53 @@
 		</script>
 	</head>
 	<body>
-
-		<div id="console" class="window" onkeydown="consoleInput(event);">
-			<div class="winbar">Command Prompt</div>
-
-			<div id="consoleContent">
-				Error loading console
-			</div>
+		<div id="bsod">
+			A problem has been detected and Wimdons has been shut down to prevent damage to your computer.
+			<br><br>
+			SCREEN_WIDTH_LOW
+			<br><br>
+			If this is the first time you've seen this Stop error screen, restart your computer. If this screen appears again, follow these steps:
+			<br><br>
+			Check to make sure any hardware or software is properly installed.
+			If this is a new installation, ask your hardware or software manufacturer for any Wimdons updates you might need.
+			<br><br>
+			If problems continue, disable or remove any newly installed hardware or software. Disable BIOS memory options such as caching or shadowing.
+			If you need to use Safe Mode to remove or disable components, restart your computer, press F8 to select Advanced Startup Options, and then select Safe Mode.
+			<br><br>
+			Technical information:
+			<br><br>
+			*** STOP: 0x00000001 (0x00000001,0x00000000x)
+			<br><br><br><br>
+			Collecting data for crash dump ...
+			<br>
+			Initializing disk for crash dump ...
+			<br>
+			Beginning dump of physical memory.
+			<br>
+			Dumping physical memory to disk: 13
 		</div>
+		<div id="screen">
+			<div id="console" class="window" onkeydown="consoleInput(event);">
+				<div class="winbar">Command Prompt</div>
 
-		<div id="taskbar">
-			<div id="startMenu">
-				<img src="graphics/logo.png" id="logo">
-				<div id="startText">Start</div>
+				<div id="consoleContent">
+					Error loading console
+				</div>
 			</div>
 
-			<div class="taskItems">
-				<div id="clock" class="taskItem">HH:MM</div>
-				<img src="graphics/network_none.png" id="network" class="taskItem">
+			<div id="taskbar">
+				<div id="startMenu">
+					<img src="graphics/logo.png" draggable="false" id="logo">
+					<div id="startText">Start</div>
+				</div>
+				<div id="tabs">
+					<div id="commandPromptTab" onclick="hideConsole();">Command prompt</div>
+				</div>
+
+				<div class="taskItems">
+					<div id="clock" class="taskItem">HH:MM</div>
+					<img src="graphics/network_none.png" draggable="false" id="network" class="taskItem">
+				</div>
 			</div>
 		</div>
 	</body>
