@@ -8,6 +8,7 @@ var consoleContent;
 var consoleWindow;
 var consoleTab;
 var windowActive = true;
+var maxScrollDistance = 40;
 
 var defBoardSize = 13;
 var defGameSpeed = 50;
@@ -327,6 +328,8 @@ function executeCommand(command) {
 	consoleContent.innerHTML += "<br><br>";
 	currentLine = "";
 	consoleContent.innerHTML += "Wimdons Console /root> ";
+
+	scrollBottom();
 }
 
 /* logic repeated in the interval */
@@ -381,6 +384,7 @@ function cycle() {
 	updateTabs();
 	updateNetwork();
 	updateTime();
+	updateScroll();
 }
 
 /* game functions */
@@ -514,6 +518,18 @@ function hideConsole() {
 		consoleTab.style.borderStyle = "outset";
 	}
 	
+}
+
+function scrollBottom() {
+	consoleContent.scrollTop = consoleContent.scrollHeight - consoleContent.clientHeight;
+}
+
+function updateScroll() {
+	let distanceToBottom = (consoleContent.scrollTop + consoleContent.clientHeight - consoleContent.scrollHeight)*-1;
+	
+	if (distanceToBottom <= maxScrollDistance) {
+		scrollBottom();
+	}
 }
 
 function updateTime() {
