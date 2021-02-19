@@ -1,4 +1,6 @@
 ﻿/* defaults */
+var cycleTime = 200; /* change to 1 and make game speed independent */
+
 var boardSize = 13;
 var boardFill = parseInt(0);
 var gameSpeed = 200;
@@ -61,7 +63,7 @@ var lastInput = "right";
 var lastCode;
 
 /* disable backspace */
-window.onkeydown = function (event) { if (event.which == 8) { event.preventDefault(); }; };
+window.onkeydown = function (event) { if (event.which == 8) { event.preventDefault(); } };
 
 /* generate board */
 var preBoard;
@@ -108,6 +110,8 @@ function setup() {
 	document.addEventListener("keydown", keyInput, false);
 	consoleContent = document.getElementById("consoleContent");
 
+	setInterval(cycle, cycleTime);
+
 	if (!gameOn) {
 		initLine();
 	}
@@ -132,7 +136,7 @@ function printBoard() {
 			} else if (e < 0) {
 				pval = pApple;
 			} else if (e > 0) {
-				pval = pBody
+				pval = pBody;
 			} else {
 				pval = pBackground;
 			}
@@ -174,8 +178,10 @@ function keyInput(event) {
 		case controls.console:
 			if (gameOn) {
 				exitGame();
+				return;
+			} else {
+				break;
 			}
-			return;
 
 		default:
 			break;
@@ -227,19 +233,14 @@ function executeCommand(command) {
 				break;
 			}
 
-			if (!isNaN(parseInt(command[3]))) {
-				gameSpeed = command[3];
-			} else if (command[3] != null) {
-				consoleContent.innerHTML += "Invalid argument[2]";
-				break;
-			}
-
-			/* start game */
+			/* start game *//*
 			setTimeout(() => {
 				genBoard();
-				gameInterval = setInterval(advanceGame, gameSpeed);
 				gameOn = true;
 			}, loadTime);
+			*/
+			genBoard();
+			gameOn = true;
 
 			consoleContent.innerHTML = "Controls: <br>movement: [w/s/a/d/arrows] <br>change controls: [ '\\' ] <br> exit game: [ ']' ] <br><br>Starting snek...";
 			startTime = new Date().getTime();
@@ -253,7 +254,7 @@ function executeCommand(command) {
 			if (command[1] != null) {
 				switch (command[1]) {
 					case commands.snake:
-						consoleContent.innerHTML += `Starts snake inside this windows <br> ${commands.snake} [enableDelay:bool] [boardSize:int] [gameSpeed:int]`;
+						consoleContent.innerHTML += `Starts snake inside this windows <br> ${commands.snake} [enableDelay:bool] [boardSize:int]`;
 						break;
 				
 					case commands.clear:
@@ -282,32 +283,32 @@ function executeCommand(command) {
 	consoleContent.innerHTML += "Wimdons Console /root> ";
 }
 
-/* game logic */
-function advanceGame() {
-	/* return if game is off */
-	if (!gameOn) {
-		return;
-	}
+/* logic repeated in the interval */
+function cycle() {
+	/* check if game is on */
+	if (gameOn) {
+		/* spawn apple */
+		while (spawnApple) {
+			let x = Math.round(Math.random()*boardSize);
+			let y = Math.round(Math.random()*boardSize);
 
-	/* spawn apple */
-	while (spawnApple) {
-		let x = Math.round(Math.random()*boardSize);
-		let y = Math.round(Math.random()*boardSize);
+			if (board[x][y] == 0) {
+				board[x][y] = -1;
+				spawnApple = false;
+			}
 
-		if (board[x][y] == 0) {
-			board[x][y] = -1;
-			spawnApple = false;
 		}
 
-	}
-	
-	/* move snake */
-	move();
+		/* move snake */
+		move();
 
-	/* do visual stuff */
-	if (gameOn) {
-		printBoard();
+		/* do visual stuff */
+		if (gameOn) {
+			printBoard();
+		}
 	}
+
+	updateTime();
 }
 
 /* game functions */
@@ -405,7 +406,6 @@ function lowerBoard() {
 }
 
 function exitGame() {
-	clearInterval(gameInterval);
 	gameOn = false;
 	consoleContent.innerHTML += "<br><br>";
 	currentLine = "";
@@ -414,11 +414,16 @@ function exitGame() {
 }
 
 function loose() {
-	consoleContent.innerHTML += "<br>You lost!"
+	consoleContent.innerHTML += "<br>You lost!";
 	exitGame();
 }
 
 /* custom function for testing && || fun */
 function custom() {
 	consoleContent.style.color = `hsl(${Math.floor(Math.random()*360)}, 100%, 45%)`;
+}
+
+function updateTime() {
+	let date = new Date();
+	document.getElementById("clock").innerHTML = date.getHours() + ":" + ("0" + date.getMinutes()).slice(-2);
 }

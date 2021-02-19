@@ -70,8 +70,13 @@ body {
 	left: 0px;
 }
 
-.taskItem {
-	box-sizing: border-box;
+.taskItems {
+	width: 96px;
+	border: 2px inset rgb(196, 196, 196);
+	padding: 2px;
+
+	display: flex;
+	flex-direction: row-reverse;
 }
 
 #startMenu {
@@ -82,4 +87,8 @@ body {
 
 #startMenu:hover {
 	border-style: inset;
+}
+
+#clock {
+	font-weight: lighter;
 }
