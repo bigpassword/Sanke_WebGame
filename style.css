@@ -150,6 +150,7 @@ body {
 	display: none;
 }
 
+/* hide windows */
 @media screen and (max-width: 746px) {
 	.window {
 		display: none;

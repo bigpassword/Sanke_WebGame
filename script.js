@@ -373,10 +373,12 @@ function cycle() {
 		}
 	}
 
+	/* epilepsy mode */
 	if (rainbowText) {
 		custom();
 	}
 
+	updateTabs();
 	updateNetwork();
 	updateTime();
 }
@@ -499,9 +501,13 @@ function custom() {
 }
 
 function hideConsole() {
+	/* stop if brower window smaller that allowed; refer to the .css file for further context */
+	if (window.innerWidth <= 746) {
+		return;
+	}
 	windowActive = !windowActive;
 	if (windowActive) {
-		consoleWindow.style.display = "block";
+		consoleWindow.style.display = "";
 		consoleTab.style.borderStyle = "inset";
 	} else {
 		consoleWindow.style.display = "none";
@@ -551,4 +557,13 @@ function updateNetwork() {
 	}
 
 	networkDeltaTime += cycleTime;
+}
+
+function updateTabs() {
+	/* update tab to be minimalized if brower window smaller that allowed; refer to the .css file for further context */
+	if (window.innerWidth <= 746) {
+		consoleTab.style.borderStyle = "outset";
+	} else if (windowActive) {
+		consoleTab.style.borderStyle = "";
+	}
 }
