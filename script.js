@@ -1,11 +1,15 @@
 ﻿/* defaults */
 var cycleTime = 1; /* change to 1 and make game speed independent */
 
-var boardSize = 13;
+var defBoardSize = 13;
+var defGameSpeed = 50;
+
 var boardFill = parseInt(0);
-var gameSpeed = 100;
 var gameDeltaTime = 0;
 var loadTime = 2000;
+var defInput = "right";
+
+
 
 var pHead = "0";
 var pBody = "o";
@@ -15,11 +19,12 @@ var pBackground = "-";
 var currentLine = "";
 
 /* game vars */
+var defApple = true;
+var defMapWrap = true;
+var defSnakeLen = 3;
+
 var gameOn = false;
-var spawnApple = true;
-var mapWrap = true;
 var minSize = 3;
-var snakeLen = 2;
 var curPos;
 var startTime;
 
@@ -98,12 +103,12 @@ function initLine() {
 }
 
 function resetGameVars() {
-	lastInput = "right";
-	boardSize = 13;
-	gameSpeed = 100;
-	spawnApple = true;
-	mapWrap = true;
-	snakeLen = 2;
+	lastInput = defInput;
+	boardSize = defBoardSize;
+	gameSpeed = defGameSpeed;
+	spawnApple = defApple;
+	mapWrap = defMapWrap;
+	snakeLen = defSnakeLen;
 }
 
 /*setup things that require the html part to be loaded */
@@ -121,7 +126,7 @@ function setup() {
 /* print board function */
 function printBoard() {
 	consoleContent.innerHTML = "Time: " + new Date(new Date().getTime() - startTime).getSeconds() + "<br>";
-	consoleContent.innerHTML += "Score: " + snakeLen + "<br>";
+	consoleContent.innerHTML += "Score: " + (snakeLen - defSnakeLen) + "<br>";
 
 	/* actual board*/
 	/* debug printout
@@ -293,6 +298,19 @@ function executeCommand(command) {
 function cycle() {
 	/* check if game is on */
 	if (gameOn) {
+		/* check if won by clearing board */
+		let winCondition = true;
+		board.forEach(el => {
+			el.forEach(il => {
+				if (il == 0) {
+					winCondition = false;
+				}
+			});
+		});
+		if (winCondition) {
+			winGame();
+		}
+
 		/* progress time */
 		gameDeltaTime += cycleTime;
 		if (gameDeltaTime >= gameSpeed) {
@@ -427,6 +445,11 @@ function exitGame() {
 
 function loose() {
 	consoleContent.innerHTML += "<br>You lost!";
+	exitGame();
+}
+
+function winGame() {
+	consoleContent.innerHTML += "<br>You win!";
 	exitGame();
 }
 
