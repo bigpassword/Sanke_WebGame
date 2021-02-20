@@ -287,6 +287,7 @@ function executeCommand(command) {
 			return;
 		
 		case commands.epilepsy:
+			consoleContent.innerHTML += "Toggling epilepsy mode..."
 			rainbowText = !rainbowText;
 			if (!rainbowText) {
 				consoleContent.style.color = "white";
