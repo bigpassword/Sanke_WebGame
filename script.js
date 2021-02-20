@@ -241,10 +241,10 @@ function executeCommand(command) {
 	switch (command[0]) {
 		case commands.snake:
 			resetGameVars();
-			if (!isNaN(parseInt(command[1]))) {
-				if (command[1] == 1) {
+			if (command[1] != null) {
+				if (command[1] == "true") {
 					loadTime = 2000;
-				} else if (command[1] == 0) {
+				} else if (command[1] == "false") {
 					loadTime = 0;
 				} else {
 					consoleContent.innerHTML += "Invalid argument[0]";
@@ -269,6 +269,17 @@ function executeCommand(command) {
 			} else if (command[3] != null) {
 				consoleContent.innerHTML += "Invalid argument[2]";
 				break;
+			}
+
+			if (command[4] != null) {
+				if (command[4] == "true") {
+					mapWrap = true;
+				} else if (command[4] == "false") {
+					mapWrap = false;
+				} else {
+					consoleContent.innerHTML += "Invalid argument[0]";
+					break;
+				}
 			}
 
 			/* start game */
@@ -298,7 +309,7 @@ function executeCommand(command) {
 			if (command[1] != null) {
 				switch (command[1]) {
 					case commands.snake:
-						consoleContent.innerHTML += `Starts snake inside this windows <br> ${commands.snake} [enableDelay:bool] [boardSize:int] [gameSpeed:int]`;
+						consoleContent.innerHTML += `Starts snake inside this windows <br> ${commands.snake} [enableDelay:bool] [boardSize:int] [gameSpeed:int] [mapWrap:bool]`;
 						break;
 				
 					case commands.clear:
