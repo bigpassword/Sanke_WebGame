@@ -79,6 +79,7 @@ body {
 }
 
 .taskItems {
+	background-color: rgb(195, 195, 195);
 	width: 96px;
 	border: 2px inset rgb(196, 196, 196);
 	padding: 2px;
@@ -117,6 +118,7 @@ body {
 }
 
 #startMenu:hover {
+	background-color: rgb(224, 224, 224);
 	border-style: inset;
 }
 
