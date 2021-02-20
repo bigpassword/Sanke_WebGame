@@ -582,8 +582,11 @@ function updateTabs() {
 		consoleTab.style.borderStyle = "outset";
 	} else if (windowActive) {
 		consoleTab.style.borderStyle = "";
-		consoleTab.style.backgroundColor = "rgb(224, 224, 224)";
-	} else {
+	}
+
+	if (consoleTab.style.borderStyle == "outset") {
 		consoleTab.style.backgroundColor = "";
+	} else if (consoleTab.style.borderStyle == "") {
+		consoleTab.style.backgroundColor = "rgb(224, 224, 224)";
 	}
 }
