@@ -84,6 +84,12 @@ body {
 	flex: 1;
 }
 
+.cmdIcon {
+	width: 16px;
+	height: 16px;
+	margin-right: 1px;
+}
+
 #consoleContent {
 	background-color: black;
 	height: 100%;
