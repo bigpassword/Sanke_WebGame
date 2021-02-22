@@ -36,11 +36,11 @@
 			<br>
 			Dumping physical memory to disk: 13
 		</div>
-		<div id="screen">
+		<div id="screen" onmousedown="clearSelect();">
 			<div id="console" class="window" onkeydown="consoleInput(event);">
 				<div class="winbar">
 					<img src="graphics/cmdIconS.png" draggable="false" class="cmdIcon">
-					Command Prompt
+					<span>Command Prompt</span>
 					<div class="spacer"></div>
 
 					<div id="miniWindow" class="controlB" onclick="toggleMiniWindow();">_</div>
@@ -52,6 +52,10 @@
 					Error loading console
 				</div>
 			</div>
+		</div>
+		<div id="cmdExe" onclick="selectExe();" ondblclick="runCmd();">
+			<img src="graphics/cmdIconX.png">
+			Command prompt
 		</div>
 		<div id="taskbar">
 			<div id="startMenu">

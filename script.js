@@ -7,6 +7,7 @@ var networkDeltaTime = 0;
 var consoleContent;
 var consoleWindow;
 var consoleTab;
+var cmdExe;
 var windowSizeB;
 var windowActive = true;
 var maxWindow = false;
@@ -131,6 +132,7 @@ function setup() {
 	consoleTab = document.getElementById("commandPromptTab");
 	windowSizeB = document.getElementById("sizeIcon");
 	network = document.getElementById("network");
+	cmdExe = document.getElementById("cmdExe");
 
 	setInterval(cycle, cycleTime);
 
@@ -589,9 +591,43 @@ function updateTabs() {
 	}
 }
 
+function runCmd() {
+	/*
+	if (consoleTab.style.display == "none") {
+		if (window.innerWidth <= 746) {
+			consoleTab.style.display = "";
+			cmdExe.style.zIndex = "";
+
+			return;
+		}
+		consoleWindow.style.display = "";
+
+		windowActive = true;
+	} else if (consoleTab.style.borderStyle == "outset") {
+		toggleMiniWindow();
+	}
+
+	if (consoleTab.style.display == "none") {
+		consoleWindow.style.display = "";
+		cmdExe.style.zIndex = "";
+	}
+
+	consoleTab.style.display = "";
+	*/
+	consoleTab.style.display = "";
+	consoleTab.style.borderStyle = "outset";
+
+	if (window.innerWidth > 746 && consoleWindow.style.display == "none") {
+		windowActive = false;
+		toggleMiniWindow();
+		cmdExe.style.zIndex = "";
+	}
+}
+
 function closeWindow() {
-	consoleWindow.outerHTML = "";
-	consoleTab.outerHTML = "";
+	consoleWindow.style.display = "none";
+	consoleTab.style.display = "none";
+	cmdExe.style.zIndex = "0";
 }
 
 function toggleMiniWindow() {
@@ -603,9 +639,11 @@ function toggleMiniWindow() {
 	if (windowActive) {
 		consoleWindow.style.display = "";
 		consoleTab.style.borderStyle = "inset";
+		cmdExe.style.zIndex = "";
 	} else {
 		consoleWindow.style.display = "none";
 		consoleTab.style.borderStyle = "outset";
+		cmdExe.style.zIndex = "0";
 	}
 }
 
@@ -624,4 +662,12 @@ function toggleMaxWindow() {
 		consoleWindow.style.borderStyle = "";
 		windowSizeB.src = "graphics/winMax.png";
 	}
+}
+
+function clearSelect() {
+	cmdExe.style.backgroundColor = "";
+}
+
+function selectExe() {
+	cmdExe.style.backgroundColor = "lightskyblue";
 }

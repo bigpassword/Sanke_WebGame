@@ -90,6 +90,19 @@ body {
 	margin-right: 1px;
 }
 
+#cmdExe {
+	width: 64px;
+	height: 64px;
+	margin: 8px;
+	padding: 8px;
+	text-align: center;
+	
+	z-index: -1;
+	
+	position: absolute;
+	top: 0px;
+}
+
 #consoleContent {
 	background-color: black;
 	height: 100%;
@@ -204,6 +217,10 @@ body {
 @media screen and (max-width: 746px) {
 	.window {
 		display: none;
+	}
+
+	#cmdExe {
+		z-index: 0;
 	}
 
 	#commandPromptTab {
