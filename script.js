@@ -7,7 +7,9 @@ var networkDeltaTime = 0;
 var consoleContent;
 var consoleWindow;
 var consoleTab;
+var windowSizeB;
 var windowActive = true;
+var maxWindow = false;
 var maxScrollDistance = 40;
 
 var defBoardSize = 13;
@@ -127,6 +129,7 @@ function setup() {
 	consoleContent = document.getElementById("consoleContent");
 	consoleWindow = document.getElementById("console");
 	consoleTab = document.getElementById("commandPromptTab");
+	windowSizeB = document.getElementById("sizeIcon");
 	network = document.getElementById("network");
 
 	setInterval(cycle, cycleTime);
@@ -516,22 +519,6 @@ function custom() {
 	consoleContent.style.color = `hsl(${Math.floor(Math.random()*360)}, 100%, 50%)`;
 }
 
-function hideConsole() {
-	/* stop if brower window smaller that allowed; refer to the .css file for further context */
-	if (window.innerWidth <= 746) {
-		return;
-	}
-	windowActive = !windowActive;
-	if (windowActive) {
-		consoleWindow.style.display = "";
-		consoleTab.style.borderStyle = "inset";
-	} else {
-		consoleWindow.style.display = "none";
-		consoleTab.style.borderStyle = "outset";
-	}
-	
-}
-
 function scrollBottom() {
 	consoleContent.scrollTop = consoleContent.scrollHeight - consoleContent.clientHeight;
 }
@@ -599,5 +586,42 @@ function updateTabs() {
 		consoleTab.style.backgroundColor = "";
 	} else if (consoleTab.style.borderStyle == "") {
 		consoleTab.style.backgroundColor = "rgb(224, 224, 224)";
+	}
+}
+
+function closeWindow() {
+	consoleWindow.outerHTML = "";
+	consoleTab.outerHTML = "";
+}
+
+function toggleMiniWindow() {
+	/* stop if brower window smaller that allowed; refer to the .css file for further context */
+	if (window.innerWidth <= 746) {
+		return;
+	}
+	windowActive = !windowActive;
+	if (windowActive) {
+		consoleWindow.style.display = "";
+		consoleTab.style.borderStyle = "inset";
+	} else {
+		consoleWindow.style.display = "none";
+		consoleTab.style.borderStyle = "outset";
+	}
+}
+
+function toggleMaxWindow() {
+	maxWindow = !maxWindow;
+	if (maxWindow) {
+		consoleWindow.style.width = "100%";
+		consoleWindow.style.height = "100%";
+		consoleWindow.style.margin = "0px";
+		consoleWindow.style.borderStyle = "none";
+		windowSizeB.src = "graphics/winMin.png";
+	} else {
+		consoleWindow.style.width = "";
+		consoleWindow.style.height = "";
+		consoleWindow.style.margin = "";
+		consoleWindow.style.borderStyle = "";
+		windowSizeB.src = "graphics/winMax.png";
 	}
 }

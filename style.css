@@ -19,6 +19,16 @@
 
 body {
 	background-color: teal;
+	height: 100vh;
+	margin: 0px;
+
+	display: flex;
+	flex-direction: column;
+}
+
+#screen {
+	height: 100%;
+	overflow: hidden;
 }
 
 .window {
@@ -27,6 +37,7 @@ body {
 	color: white;
 	width: 720px;
 	height: 480px;
+	margin: 8px;
 
 	display: flex;
 	flex-direction: column;
@@ -42,7 +53,35 @@ body {
 
 	display: flex;
 	flex-direction: row;
-	justify-content: space-between;
+}
+
+.controlB {
+	font-size: 12px;
+	font-weight: bolder;
+	background-color: lightgray;
+	color: black;
+	border: 2px outset rgb(196, 196, 196);;
+	width: 16px;
+	height: 16px;
+	margin: 1px 0.5px;
+	line-height: 8px;
+
+	display: flex;
+	justify-content: center;
+	box-sizing: border-box;
+}
+
+.controlB:active {
+	border-style: inset;
+}
+
+#closeWindow {
+	margin: 1px 0px;
+	margin-left: 2px;
+}
+
+.spacer {
+	flex: 1;
 }
 
 #consoleContent {
@@ -73,9 +112,6 @@ body {
 	align-content: center;
 
 	box-sizing: border-box;
-	position: absolute;
-	bottom: 0px;
-	left: 0px;
 }
 
 .taskItems {
@@ -175,11 +211,19 @@ body {
 		background-color: blue;
 	}
 
+	body {
+		display: initial;
+	}
+
 	#bsod {
 		display: block;
 	}
 
 	#screen {
+		display: none;
+	}
+
+	#taskbar {
 		display: none;
 	}
 }

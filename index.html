@@ -38,26 +38,31 @@
 		</div>
 		<div id="screen">
 			<div id="console" class="window" onkeydown="consoleInput(event);">
-				<div class="winbar">Command Prompt</div>
+				<div class="winbar">Command Prompt
+					<div class="spacer"></div>
+
+					<div id="miniWindow" class="controlB" onclick="toggleMiniWindow();">_</div>
+					<div id="maxWindow" class="controlB" onclick="toggleMaxWindow();"><img src="graphics/winMax.png" draggable="false" id="sizeIcon"></div>
+					<div id="closeWindow" class="controlB" onclick="closeWindow();">X</div>
+				</div>
 
 				<div id="consoleContent">
 					Error loading console
 				</div>
 			</div>
+		</div>
+		<div id="taskbar">
+			<div id="startMenu">
+				<img src="graphics/logo.png" draggable="false" id="logo">
+				<div id="startText">Start</div>
+			</div>
+			<div id="tabs">
+				<div id="commandPromptTab" onclick="toggleMiniWindow();">Command prompt</div>
+			</div>
 
-			<div id="taskbar">
-				<div id="startMenu">
-					<img src="graphics/logo.png" draggable="false" id="logo">
-					<div id="startText">Start</div>
-				</div>
-				<div id="tabs">
-					<div id="commandPromptTab" onclick="hideConsole();">Command prompt</div>
-				</div>
-
-				<div class="taskItems">
-					<div id="clock" class="taskItem">HH:MM</div>
-					<img src="graphics/network_none.png" draggable="false" id="network" class="taskItem">
-				</div>
+			<div class="taskItems">
+				<div id="clock" class="taskItem">HH:MM</div>
+				<img src="graphics/network_none.png" draggable="false" id="network" class="taskItem">
 			</div>
 		</div>
 	</body>
