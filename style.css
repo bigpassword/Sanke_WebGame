@@ -246,6 +246,10 @@ body {
 		display: none;
 	}
 
+	#cmdExe {
+		display: none;
+	}
+
 	#taskbar {
 		display: none;
 	}
