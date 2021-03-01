@@ -535,7 +535,13 @@ function updateScroll() {
 
 function updateTime() {
 	let date = new Date();
-	document.getElementById("clock").innerHTML = date.getHours() + ":" + ("0" + date.getMinutes()).slice(-2);
+	document.getElementById("clock").innerHTML = date.getHours();
+	if (date.getSeconds() % 2) {
+		document.getElementById("clock").innerHTML += " "
+	} else {
+		document.getElementById("clock").innerHTML += ":"
+	}
+	document.getElementById("clock").innerHTML += ("0" + date.getMinutes()).slice(-2);
 }
 
 function updateNetwork() {
